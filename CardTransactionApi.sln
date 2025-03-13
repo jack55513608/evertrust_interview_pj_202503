@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35828.75
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "evertrust_interview_pj_202503", "evertrust_interview_pj_202503\evertrust_interview_pj_202503.csproj", "{8714FA4F-2D33-4462-9223-4EA0FFAC9894}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardTransactionApi", "CardTransactionApi\CardTransactionApi.csproj", "{8714FA4F-2D33-4462-9223-4EA0FFAC9894}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
