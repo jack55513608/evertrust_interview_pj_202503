@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35828.75
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "evertrust_interview_pj_202503", "evertrust_interview_pj_202503\evertrust_interview_pj_202503.csproj", "{8714FA4F-2D33-4462-9223-4EA0FFAC9894}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8714FA4F-2D33-4462-9223-4EA0FFAC9894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8714FA4F-2D33-4462-9223-4EA0FFAC9894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8714FA4F-2D33-4462-9223-4EA0FFAC9894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8714FA4F-2D33-4462-9223-4EA0FFAC9894}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {26C43C01-EFA5-4772-8A9B-117B4E2E6EC0}
+	EndGlobalSection
+EndGlobal

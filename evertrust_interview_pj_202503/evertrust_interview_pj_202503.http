@@ -1,0 +1,6 @@
+@evertrust_interview_pj_202503_HostAddress = http://localhost:5285
+
+GET {{evertrust_interview_pj_202503_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
