@@ -20,7 +20,7 @@ namespace CardTransactionApi.Repository
             var sql = @"
                 SELECT t.*, c.Id, c.CardNumber, c.Name, c.Specification 
                 FROM CardTransactions t
-                INNER JOIN Cards c ON t.CardId = c.Id";
+                INNER JOIN Cards c ON t.CardNumber = c.CardNumber";
             var transactions = await connection.QueryAsync<CardTransaction, Card, CardTransaction>(
                 sql,
                 (transaction, card) =>
@@ -37,7 +37,7 @@ namespace CardTransactionApi.Repository
             var sql = @"
                 SELECT t.*, c.Id, c.CardNumber, c.Name, c.Specification 
                 FROM CardTransactions t
-                INNER JOIN Cards c ON t.CardId = c.Id
+                INNER JOIN Cards c ON t.CardNumber = c.CardNumber
                 WHERE t.Id = @Id";
             var result = await connection.QueryAsync<CardTransaction, Card, CardTransaction>(
                 sql,
@@ -54,9 +54,9 @@ namespace CardTransactionApi.Repository
         {
             using var connection = new SqlConnection(_connectionString);
             var sql = @"
-                INSERT INTO CardTransactions (CardId, Price, TransactionTime, IsSettled) 
+            INSERT INTO CardTransactions (CardNumber, Price, TransactionTime, IsSettled)
                 OUTPUT INSERTED.Id
-                VALUES (@CardId, @Price, @TransactionTime, @IsSettled)";
+            VALUES (@CardNumber, @Price, @TransactionTime, @IsSettled)";
             var id = await connection.ExecuteScalarAsync<int>(sql, transaction);
             return id;
         }
@@ -66,7 +66,7 @@ namespace CardTransactionApi.Repository
             using var connection = new SqlConnection(_connectionString);
             var sql = @"
                 UPDATE CardTransactions 
-                SET CardId = @CardId, Price = @Price, TransactionTime = @TransactionTime, IsSettled = @IsSettled 
+                SET CardNumber = @CardNumber, Price = @Price, TransactionTime = @TransactionTime, IsSettled = @IsSettled
                 WHERE Id = @Id";
             var affected = await connection.ExecuteAsync(sql, transaction);
             return affected > 0;
@@ -86,7 +86,7 @@ namespace CardTransactionApi.Repository
             var sql = @"
                 SELECT t.*, c.Id, c.CardNumber, c.Name, c.Specification 
                 FROM CardTransactions t
-                INNER JOIN Cards c ON t.CardId = c.Id
+                INNER JOIN Cards c ON t.CardNumber = c.CardNumber
                 WHERE t.UserId = @UserId";
             var transactions = await connection.QueryAsync<CardTransaction, Card, CardTransaction>(
                 sql,

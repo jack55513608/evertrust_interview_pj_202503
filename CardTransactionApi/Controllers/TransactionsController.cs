@@ -1,6 +1,5 @@
 using CardTransactionApi.Models;
 using CardTransactionApi.Services;
-using CardTransactionApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CardTransactionApi.Controllers

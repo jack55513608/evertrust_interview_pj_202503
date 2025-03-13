@@ -9,7 +9,7 @@ namespace CardTransactionApi.Models
     public class CardTransaction
     {
         public int Id { get; set; }
-        public int CardId { get; set; }
+        public int CardNumber { get; set; }
         public Card? Card { get; set; }
         public decimal Price { get; set; }
         public DateTime TransactionTime { get; set; }
