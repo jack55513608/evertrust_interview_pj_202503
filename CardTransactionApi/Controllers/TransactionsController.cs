@@ -1,4 +1,5 @@
 using CardTransactionApi.Models;
+using CardTransactionApi.Services;
 using CardTransactionApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,17 +9,24 @@ namespace CardTransactionApi.Controllers
     [ApiController]
     public class TransactionsController : ControllerBase
     {
-        private readonly ITransactionRepository _transactionRepository;
+        private readonly ITransactionService _transactionService;
 
-        public TransactionsController(ITransactionRepository transactionRepository)
+        public TransactionsController(ITransactionService transactionService)
         {
-            _transactionRepository = transactionRepository;
+            _transactionService = transactionService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<CardTransaction>>> GetTransactions()
+        {
+            var transactions = await _transactionService.GetTransactionsAsync();
+            return Ok(transactions);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<CardTransaction>> GetTransaction(int id)
         {
-            var transaction = await _transactionRepository.GetTransactionByIdAsync(id);
+            var transaction = await _transactionService.GetTransactionByIdAsync(id);
             if (transaction == null)
                 return NotFound();
             return Ok(transaction);
@@ -27,7 +35,7 @@ namespace CardTransactionApi.Controllers
         [HttpPost]
         public async Task<ActionResult<CardTransaction>> PostTransaction(CardTransaction transaction)
         {
-            var id = await _transactionRepository.AddTransactionAsync(transaction);
+            var id = await _transactionService.AddTransactionAsync(transaction);
             transaction.Id = id;
             return CreatedAtAction(nameof(GetTransaction), new { id = transaction.Id }, transaction);
         }
@@ -37,7 +45,7 @@ namespace CardTransactionApi.Controllers
         {
             if (id != transaction.Id)
                 return BadRequest();
-            var updated = await _transactionRepository.UpdateTransactionAsync(transaction);
+            var updated = await _transactionService.UpdateTransactionAsync(transaction);
             if (!updated)
                 return NotFound();
             return NoContent();
@@ -46,7 +54,7 @@ namespace CardTransactionApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTransaction(int id)
         {
-            var deleted = await _transactionRepository.DeleteTransactionAsync(id);
+            var deleted = await _transactionService.DeleteTransactionAsync(id);
             if (!deleted)
                 return NotFound();
             return NoContent();
@@ -55,7 +63,7 @@ namespace CardTransactionApi.Controllers
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<CardTransaction>>> GetTransactionsByUserId(Guid userId)
         {
-            var transactions = await _transactionRepository.GetTransactionsByUserIdAsync(userId);
+            var transactions = await _transactionService.GetTransactionsByUserIdAsync(userId);
             return Ok(transactions);
         }
     }

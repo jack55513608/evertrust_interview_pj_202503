@@ -1,10 +1,16 @@
+using CardTransactionApi.Models;
 using CardTransactionApi.Repository;
+using CardTransactionApi.Services; // Adding the using directive for services
 
 var builder = WebApplication.CreateBuilder(args);
 
 // 註冊 Repository 到 DI 容器
 builder.Services.AddScoped<ICardRepository, CardRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICardService, CardService>(); // Registering the CardService
+builder.Services.AddScoped<IUserService, UserService>(); // Registering the UserService
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
