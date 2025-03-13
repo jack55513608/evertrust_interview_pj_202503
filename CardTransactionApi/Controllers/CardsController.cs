@@ -1,5 +1,5 @@
 using CardTransactionApi.Models;
-using CardTransactionApi.Repository;
+using CardTransactionApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CardTransactionApi.Controllers
@@ -8,40 +8,48 @@ namespace CardTransactionApi.Controllers
     [ApiController]
     public class CardsController : ControllerBase
     {
-        private readonly ICardRepository _cardRepository;
-        public CardsController(ICardRepository cardRepository)
+        private readonly ICardService _cardService;
+        public CardsController(ICardService cardService)
         {
-            _cardRepository = cardRepository;
+            _cardService = cardService;
         }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Card>> GetCard(int id)
+
+        [HttpGet("{CardNumber}")]
+        public async Task<ActionResult<Card>> GetCard(string CardNumber)
         {
-            var card = await _cardRepository.GetCardByIdAsync(id);
+            var card = await _cardService.GetCardByNumberAsync(CardNumber);
             if (card == null)
                 return NotFound();
             return Ok(card);
         }
+
         [HttpPost]
-        public async Task<ActionResult<Card>> PostCard(Card card)
+        public async Task<ActionResult<Card>> PostCard(PostCardRequest request)
         {
-            var id = await _cardRepository.AddCardAsync(card);
-            card.Id = id;
-            return CreatedAtAction(nameof(GetCard), new { id = card.Id }, card);
+            var card = new Card { 
+                CardNumber = request.CardNumber,
+                Name = request.Name,
+                Specification = request.Specification
+                };
+            var id = await _cardService.AddCardAsync(card);
+            return CreatedAtAction(nameof(GetCard), new { id }, card);
         }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCard(int id, Card card)
         {
             if (id != card.Id)
                 return BadRequest();
-            var updated = await _cardRepository.UpdateCardAsync(card);
+            var updated = await _cardService.UpdateCardAsync(card);
             if (!updated)
                 return NotFound();
             return NoContent();
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCard(int id)
         {
-            var deleted = await _cardRepository.DeleteCardAsync(id);
+            var deleted = await _cardService.DeleteCardAsync(id);
             if (!deleted)
                 return NotFound();
             return NoContent();
